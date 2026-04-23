@@ -1,8 +1,6 @@
 services:
   web:
     build: .
-    volumes:
-      - shisha_dist:/dist
-
-volumes:
-  shisha_dist:
+    ports:
+      - "777:777"
+    restart: always

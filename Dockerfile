@@ -5,5 +5,8 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM scratch
-COPY --from=builder /app/dist /dist
+FROM node:20-alpine
+RUN npm install -g serve
+COPY --from=builder /app/dist /app/dist
+EXPOSE 777
+CMD ["serve", "-s", "/app/dist", "-l", "777"]
