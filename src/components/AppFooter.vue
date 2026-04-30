@@ -1,5 +1,5 @@
 <script setup>
-import { WA_LINK, TG_LINK } from '../constants.js'
+import { WA_LINK, TG_LINK, IG_LINK } from '../constants.js'
 </script>
 
 <template>
@@ -12,6 +12,7 @@ import { WA_LINK, TG_LINK } from '../constants.js'
       <div class="footer-links">
         <a :href="WA_LINK" target="_blank">WhatsApp</a>
         <a :href="TG_LINK" target="_blank">Telegram</a>
+        <a :href="IG_LINK" target="_blank">Instagram</a>
       </div>
       <div class="footer-hours">Ежедневно · 12:00 – 02:00</div>
     </div>
