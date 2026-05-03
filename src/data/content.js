@@ -1,4 +1,12 @@
 export const packages = [
+  {
+    name: 'Лайт',
+    price: '1 600',
+    fills: '1 забивка',
+    coals: '4 угля',
+    bonus: '+1 л Coca-Cola в подарок',
+    promo: true,
+  },
   { name: '3 часа',  price: '2 500', fills: '2 забивки', coals: '8 углей',  accent: false },
   { name: '6 часов', price: '3 200', fills: '3 забивки', coals: '12 углей', accent: false },
   { name: '12 часов', label: 'На вечер', price: '4 000', fills: '4 забивки', coals: '16 углей', accent: true },

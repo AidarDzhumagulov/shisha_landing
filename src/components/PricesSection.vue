@@ -39,19 +39,29 @@ onUnmounted(() => scrollEl.value?.removeEventListener('scroll', onScroll))
               v-for="pkg in packages"
               :key="pkg.name"
               class="card"
-              :class="{ 'card--accent': pkg.accent }"
+              :class="{ 'card--accent': pkg.accent, 'card--promo': pkg.promo }"
             >
               <div v-if="pkg.accent" class="badge">Популярный</div>
+              <div v-else-if="pkg.promo" class="badge badge--promo">Акция</div>
               <div class="card-time">{{ pkg.name }}</div>
               <div v-if="pkg.label" class="card-sublabel">{{ pkg.label }}</div>
               <div class="card-price">
                 {{ pkg.price }} <span class="card-curr">сом</span>
               </div>
+              <div v-if="pkg.bonus" class="card-bonus">
+                <span class="bonus-icon">🥤</span>
+                <span>{{ pkg.bonus }}</span>
+              </div>
               <ul class="card-features">
                 <li><span class="check">✓</span>{{ pkg.fills }}</li>
                 <li><span class="check">✓</span>{{ pkg.coals }}</li>
               </ul>
-              <a :href="WA_LINK" target="_blank" class="btn card-btn" :class="pkg.accent ? 'btn-primary' : 'btn-outline'">
+              <a
+                :href="WA_LINK"
+                target="_blank"
+                class="btn card-btn"
+                :class="pkg.promo ? 'btn-promo' : pkg.accent ? 'btn-primary' : 'btn-outline'"
+              >
                 Заказать
               </a>
             </div>
@@ -137,6 +147,11 @@ onUnmounted(() => scrollEl.value?.removeEventListener('scroll', onScroll))
   background: linear-gradient(160deg, #1C1910 0%, #141418 100%);
   box-shadow: var(--shadow-gold);
 }
+.card--promo {
+  border-color: rgba(232, 93, 93, 0.55);
+  background: linear-gradient(160deg, #2A1518 0%, #141418 75%);
+  box-shadow: 0 0 40px rgba(232, 93, 93, 0.18);
+}
 
 .badge {
   position: absolute;
@@ -151,6 +166,46 @@ onUnmounted(() => scrollEl.value?.removeEventListener('scroll', onScroll))
   border-radius: 20px;
   white-space: nowrap;
   letter-spacing: 0.04em;
+}
+.badge--promo {
+  background: linear-gradient(135deg, #E85D5D 0%, #D9484C 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(232, 93, 93, 0.35);
+  letter-spacing: 0.08em;
+  animation: promoPulse 2.4s ease-in-out infinite;
+}
+@keyframes promoPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50%      { transform: translateX(-50%) scale(1.06); }
+}
+
+.card-bonus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(232, 93, 93, 0.16), rgba(232, 93, 93, 0.05));
+  border: 1px solid rgba(232, 93, 93, 0.3);
+  color: #FFB0B0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.bonus-icon { font-size: 16px; flex-shrink: 0; }
+
+.btn-promo {
+  background: linear-gradient(135deg, #E85D5D 0%, #D9484C 100%);
+  color: #fff;
+}
+.btn-promo:active { filter: brightness(1.08); }
+@media (hover: hover) {
+  .btn-promo:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(232, 93, 93, 0.3);
+    filter: brightness(1.05);
+  }
 }
 .card-time {
   font-size: 18px;
@@ -276,7 +331,7 @@ onUnmounted(() => scrollEl.value?.removeEventListener('scroll', onScroll))
   .fade-right { display: none; }
   .cards-track {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     width: auto;
   }
   .card { width: auto; max-width: none; scroll-snap-align: none; }
